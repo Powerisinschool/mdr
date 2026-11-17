@@ -1,19 +1,12 @@
-<div align="center">
-  <a href="https://powerisinschool.github.io" target="_new">
-    <img src="https://i.ibb.co/dPQGR2D/DKUAM7-X4-IKRTJB4-X.gif" alt="Profile Wave" align="center" width="100">
-  </a>
-</div>
-<br/>
 <h1 style="font-size: 28px" align="center">
-	Hi, I'm <a href="https://powerisinschool.github.io/" target="_new">Tolulope Olagunju!</a>
+	Hi... I'm Tolu!
 </h1>
-<br />
 
-<!-- <p align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com/?lines=Data+scientist;Web+Developer&font=Fira%20Code&center=true&width=380&height=50"/></a>
-</p> -->
+<p align="center">
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com/?lines=Systems+Engineer;Web+Developer;Student&font=Fira%20Code&center=true&width=380&height=50"/></a>
+</p>
 
-<!--**Powerisinschool/powerisinschool** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.-->
+<hr />
 
 About me:
 
