@@ -59,19 +59,111 @@
 **Systems & Low-Level**
 
 <p>
-  <img alt="C" src="https://img.shields.io/badge/C-161B22?style=for-the-badge&logo=c&logoColor=14B8A6" /> <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-161B22?style=for-the-badge&logo=cplusplus&logoColor=14B8A6" /> <img alt="Rust" src="https://img.shields.io/badge/Rust-161B22?style=for-the-badge&logo=rust&logoColor=14B8A6" /> <img alt="Go" src="https://img.shields.io/badge/Go-161B22?style=for-the-badge&logo=go&logoColor=14B8A6" /> <img alt="Linux" src="https://img.shields.io/badge/Linux-161B22?style=for-the-badge&logo=linux&logoColor=14B8A6" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C-161B22?style=for-the-badge&logo=c&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C-F6F8FA?style=for-the-badge&logo=c&logoColor=0F766E" />
+    <img alt="C" src="https://img.shields.io/badge/C-161B22?style=for-the-badge&logo=c&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C%2B%2B-161B22?style=for-the-badge&logo=cplusplus&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C%2B%2B-F6F8FA?style=for-the-badge&logo=cplusplus&logoColor=0F766E" />
+    <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-161B22?style=for-the-badge&logo=cplusplus&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Rust-161B22?style=for-the-badge&logo=rust&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Rust-F6F8FA?style=for-the-badge&logo=rust&logoColor=0F766E" />
+    <img alt="Rust" src="https://img.shields.io/badge/Rust-161B22?style=for-the-badge&logo=rust&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Go-161B22?style=for-the-badge&logo=go&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Go-F6F8FA?style=for-the-badge&logo=go&logoColor=0F766E" />
+    <img alt="Go" src="https://img.shields.io/badge/Go-161B22?style=for-the-badge&logo=go&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Linux-161B22?style=for-the-badge&logo=linux&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Linux-F6F8FA?style=for-the-badge&logo=linux&logoColor=0F766E" />
+    <img alt="Linux" src="https://img.shields.io/badge/Linux-161B22?style=for-the-badge&logo=linux&logoColor=14B8A6" />
+  </picture>
 </p>
 
 **Web & Application**
 
 <p>
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-161B22?style=for-the-badge&logo=typescript&logoColor=14B8A6" /> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-161B22?style=for-the-badge&logo=javascript&logoColor=14B8A6" /> <img alt="React" src="https://img.shields.io/badge/React-161B22?style=for-the-badge&logo=react&logoColor=14B8A6" /> <img alt="Angular" src="https://img.shields.io/badge/Angular-161B22?style=for-the-badge&logo=angular&logoColor=14B8A6" /> <img alt="NodeJS" src="https://img.shields.io/badge/Node.js-161B22?style=for-the-badge&logo=nodedotjs&logoColor=14B8A6" /> <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-161B22?style=for-the-badge&logo=tailwindcss&logoColor=14B8A6" /> <img alt="Dart" src="https://img.shields.io/badge/Dart-161B22?style=for-the-badge&logo=dart&logoColor=14B8A6" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/TypeScript-161B22?style=for-the-badge&logo=typescript&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/TypeScript-F6F8FA?style=for-the-badge&logo=typescript&logoColor=0F766E" />
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-161B22?style=for-the-badge&logo=typescript&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/JavaScript-161B22?style=for-the-badge&logo=javascript&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/JavaScript-F6F8FA?style=for-the-badge&logo=javascript&logoColor=0F766E" />
+    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-161B22?style=for-the-badge&logo=javascript&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/React-161B22?style=for-the-badge&logo=react&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/React-F6F8FA?style=for-the-badge&logo=react&logoColor=0F766E" />
+    <img alt="React" src="https://img.shields.io/badge/React-161B22?style=for-the-badge&logo=react&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Angular-161B22?style=for-the-badge&logo=angular&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Angular-F6F8FA?style=for-the-badge&logo=angular&logoColor=0F766E" />
+    <img alt="Angular" src="https://img.shields.io/badge/Angular-161B22?style=for-the-badge&logo=angular&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Node.js-161B22?style=for-the-badge&logo=nodedotjs&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Node.js-F6F8FA?style=for-the-badge&logo=nodedotjs&logoColor=0F766E" />
+    <img alt="NodeJS" src="https://img.shields.io/badge/Node.js-161B22?style=for-the-badge&logo=nodedotjs&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Tailwind_CSS-161B22?style=for-the-badge&logo=tailwindcss&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Tailwind_CSS-F6F8FA?style=for-the-badge&logo=tailwindcss&logoColor=0F766E" />
+    <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-161B22?style=for-the-badge&logo=tailwindcss&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Dart-161B22?style=for-the-badge&logo=dart&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Dart-F6F8FA?style=for-the-badge&logo=dart&logoColor=0F766E" />
+    <img alt="Dart" src="https://img.shields.io/badge/Dart-161B22?style=for-the-badge&logo=dart&logoColor=14B8A6" />
+  </picture>
 </p>
 
 **AI, Data & Infrastructure**
 
 <p>
-  <img alt="Python" src="https://img.shields.io/badge/Python-161B22?style=for-the-badge&logo=python&logoColor=14B8A6" /> <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-161B22?style=for-the-badge&logo=tensorflow&logoColor=14B8A6" /> <img alt="Keras" src="https://img.shields.io/badge/Keras-161B22?style=for-the-badge&logo=keras&logoColor=14B8A6" /> <img alt="NumPy" src="https://img.shields.io/badge/NumPy-161B22?style=for-the-badge&logo=numpy&logoColor=14B8A6" /> <img alt="Pandas" src="https://img.shields.io/badge/Pandas-161B22?style=for-the-badge&logo=pandas&logoColor=14B8A6" /> <img alt="Docker" src="https://img.shields.io/badge/Docker-161B22?style=for-the-badge&logo=docker&logoColor=14B8A6" /> <img alt="GitHub" src="https://img.shields.io/badge/GitHub-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Python-161B22?style=for-the-badge&logo=python&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Python-F6F8FA?style=for-the-badge&logo=python&logoColor=0F766E" />
+    <img alt="Python" src="https://img.shields.io/badge/Python-161B22?style=for-the-badge&logo=python&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/TensorFlow-161B22?style=for-the-badge&logo=tensorflow&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/TensorFlow-F6F8FA?style=for-the-badge&logo=tensorflow&logoColor=0F766E" />
+    <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-161B22?style=for-the-badge&logo=tensorflow&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Keras-161B22?style=for-the-badge&logo=keras&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Keras-F6F8FA?style=for-the-badge&logo=keras&logoColor=0F766E" />
+    <img alt="Keras" src="https://img.shields.io/badge/Keras-161B22?style=for-the-badge&logo=keras&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/NumPy-161B22?style=for-the-badge&logo=numpy&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/NumPy-F6F8FA?style=for-the-badge&logo=numpy&logoColor=0F766E" />
+    <img alt="NumPy" src="https://img.shields.io/badge/NumPy-161B22?style=for-the-badge&logo=numpy&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Pandas-161B22?style=for-the-badge&logo=pandas&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Pandas-F6F8FA?style=for-the-badge&logo=pandas&logoColor=0F766E" />
+    <img alt="Pandas" src="https://img.shields.io/badge/Pandas-161B22?style=for-the-badge&logo=pandas&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Docker-161B22?style=for-the-badge&logo=docker&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Docker-F6F8FA?style=for-the-badge&logo=docker&logoColor=0F766E" />
+    <img alt="Docker" src="https://img.shields.io/badge/Docker-161B22?style=for-the-badge&logo=docker&logoColor=14B8A6" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/GitHub-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/GitHub-F6F8FA?style=for-the-badge&logo=github&logoColor=0F766E" />
+    <img alt="GitHub" src="https://img.shields.io/badge/GitHub-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+  </picture>
 </p>
 
 ---
@@ -91,6 +183,7 @@
   <a href="https://github.com/Powerisinschool">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
+      <!-- <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=F6F8FA&title_color=0F766E&text_color=24292F" /> -->
       <img height="175" alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
     </picture>
   </a>
