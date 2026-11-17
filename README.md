@@ -3,15 +3,27 @@
 # Hi, I'm Tolu 👋
 
 <a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" alt="Typing SVG" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
+    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=0F766E&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" alt="Typing SVG" />
+  </picture>
 </a>
 
 <p>
   <a href="mailto:tolu+github@olagunju.ng">
-    <img src="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" alt="Email" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" />
+      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-F6F8FA?style=for-the-badge&logo=gmail&logoColor=0F766E" />
+      <img src="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" alt="Email" />
+    </picture>
   </a>
   <a href="https://github.com/Powerisinschool?tab=repositories">
-    <img src="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" alt="Repositories" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Repositories-F6F8FA?style=for-the-badge&logo=github&logoColor=0F766E" />
+      <img src="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" alt="Repositories" />
+    </picture>
   </a>
 </p>
 
@@ -78,9 +90,8 @@
   </a>
   <a href="https://github.com/Powerisinschool">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
-      <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css&hide_border=true&bg_color=F6F8FA&title_color=0F766E&text_color=24292F" />
-      <img height="175" alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
+      <img height="175" alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
     </picture>
   </a>
 </p>
