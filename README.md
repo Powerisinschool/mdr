@@ -36,7 +36,7 @@
 | Project | Focus | Stack |
 | :--- | :--- | :--- |
 | **`swish_kernel`** | 64-bit bare-metal x86_64 OS kernel with Limine bootloader, PS/2 driver, VFS, shell, and double-buffered GUI compositor | `C++` `x86_64 Assembly` |
-| **`blink-rs`** | Minimal browser rendering engine inspired by Blink/LayoutNG with arena-allocated DOM, CSS parser, and fragment tree | `Rust` |
+| **[`blink-rs`](https://github.com/Powerisinschool/blink-rs)** | Minimal browser rendering engine inspired by Blink/LayoutNG with arena-allocated DOM, CSS parser, and fragment tree | `Rust` |
 | **`custom_gpt`** | Custom Large Language Model tokenizer and transformer inference engine built from scratch | `C++` |
 | **ESP32-C6 Smart Lock** | Bare-metal (`no_std`) embedded firmware implementing ECDSA P-256 signature verification over TCP/LAN | `Rust` `Embedded` |
 
