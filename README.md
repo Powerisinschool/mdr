@@ -4,25 +4,25 @@
 
 <a href="https://git.io/typing-svg">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
-    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=0F766E&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
-    <img alt="Typing SVG" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/typing-svg-dark-ae9cd56b.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/typing-svg-light-9c1f1d3f.svg" />
+    <img alt="Typing SVG" src="images/mdr/typing-svg-dark-ae9cd56b.svg" />
   </picture>
 </a>
 
 <p>
   <a href="mailto:tolu+github@olagunju.ng">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" />
-      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-F6F8FA?style=for-the-badge&logo=gmail&logoColor=0F766E" />
-      <img alt="Email" src="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" />
+      <source media="(prefers-color-scheme: dark)" srcset="images/mdr/email-dark-501c5024.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="images/mdr/email-light-31e254cb.svg" />
+      <img alt="Email" src="images/mdr/email-dark-501c5024.svg" />
     </picture>
   </a>
   <a href="https://github.com/Powerisinschool?tab=repositories">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
-      <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Repositories-F6F8FA?style=for-the-badge&logo=github&logoColor=0F766E" />
-      <img alt="Repositories" src="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+      <source media="(prefers-color-scheme: dark)" srcset="images/mdr/repositories-dark-77fb76da.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="images/mdr/repositories-light-12b26157.svg" />
+      <img alt="Repositories" src="images/mdr/repositories-dark-77fb76da.svg" />
     </picture>
   </a>
 </p>
@@ -60,29 +60,29 @@
 
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C-161B22?style=for-the-badge&logo=c&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C-F6F8FA?style=for-the-badge&logo=c&logoColor=0F766E" />
-    <img alt="C" src="https://img.shields.io/badge/C-161B22?style=for-the-badge&logo=c&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/c-dark-9e0b314b.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/c-light-e9ee5f04.svg" />
+    <img alt="C" src="images/mdr/c-dark-9e0b314b.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/C%2B%2B-161B22?style=for-the-badge&logo=cplusplus&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/C%2B%2B-F6F8FA?style=for-the-badge&logo=cplusplus&logoColor=0F766E" />
-    <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-161B22?style=for-the-badge&logo=cplusplus&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/cpp-dark-ba1efce8.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/cpp-light-89513901.svg" />
+    <img alt="C++" src="images/mdr/cpp-dark-ba1efce8.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Rust-161B22?style=for-the-badge&logo=rust&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Rust-F6F8FA?style=for-the-badge&logo=rust&logoColor=0F766E" />
-    <img alt="Rust" src="https://img.shields.io/badge/Rust-161B22?style=for-the-badge&logo=rust&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/rust-dark-f8740319.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/rust-light-91865ebd.svg" />
+    <img alt="Rust" src="images/mdr/rust-dark-f8740319.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Go-161B22?style=for-the-badge&logo=go&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Go-F6F8FA?style=for-the-badge&logo=go&logoColor=0F766E" />
-    <img alt="Go" src="https://img.shields.io/badge/Go-161B22?style=for-the-badge&logo=go&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/go-dark-9b5ae643.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/go-light-a0c20337.svg" />
+    <img alt="Go" src="images/mdr/go-dark-9b5ae643.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Linux-161B22?style=for-the-badge&logo=linux&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Linux-F6F8FA?style=for-the-badge&logo=linux&logoColor=0F766E" />
-    <img alt="Linux" src="https://img.shields.io/badge/Linux-161B22?style=for-the-badge&logo=linux&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/linux-dark-8ec70f64.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/linux-light-9c16cd74.svg" />
+    <img alt="Linux" src="images/mdr/linux-dark-8ec70f64.svg" />
   </picture>
 </p>
 
@@ -90,39 +90,39 @@
 
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/TypeScript-161B22?style=for-the-badge&logo=typescript&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/TypeScript-F6F8FA?style=for-the-badge&logo=typescript&logoColor=0F766E" />
-    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-161B22?style=for-the-badge&logo=typescript&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/typescript-dark-9a231117.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/typescript-light-e6ba3f56.svg" />
+    <img alt="TypeScript" src="images/mdr/typescript-dark-9a231117.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/JavaScript-161B22?style=for-the-badge&logo=javascript&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/JavaScript-F6F8FA?style=for-the-badge&logo=javascript&logoColor=0F766E" />
-    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-161B22?style=for-the-badge&logo=javascript&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/javascript-dark-e67be307.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/javascript-light-7d6a6ff8.svg" />
+    <img alt="JavaScript" src="images/mdr/javascript-dark-e67be307.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/React-161B22?style=for-the-badge&logo=react&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/React-F6F8FA?style=for-the-badge&logo=react&logoColor=0F766E" />
-    <img alt="React" src="https://img.shields.io/badge/React-161B22?style=for-the-badge&logo=react&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/react-dark-cd4428d0.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/react-light-2801077f.svg" />
+    <img alt="React" src="images/mdr/react-dark-cd4428d0.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Angular-161B22?style=for-the-badge&logo=angular&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Angular-F6F8FA?style=for-the-badge&logo=angular&logoColor=0F766E" />
-    <img alt="Angular" src="https://img.shields.io/badge/Angular-161B22?style=for-the-badge&logo=angular&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/angular-dark-be7a1b11.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/angular-light-4ebe1d59.svg" />
+    <img alt="Angular" src="images/mdr/angular-dark-be7a1b11.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Node.js-161B22?style=for-the-badge&logo=nodedotjs&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Node.js-F6F8FA?style=for-the-badge&logo=nodedotjs&logoColor=0F766E" />
-    <img alt="NodeJS" src="https://img.shields.io/badge/Node.js-161B22?style=for-the-badge&logo=nodedotjs&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/nodejs-dark-679eafb4.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/nodejs-light-ca44f4c2.svg" />
+    <img alt="NodeJS" src="images/mdr/nodejs-dark-679eafb4.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Tailwind_CSS-161B22?style=for-the-badge&logo=tailwindcss&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Tailwind_CSS-F6F8FA?style=for-the-badge&logo=tailwindcss&logoColor=0F766E" />
-    <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-161B22?style=for-the-badge&logo=tailwindcss&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/tailwindcss-dark-c01b5bc0.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/tailwindcss-light-d9a6bc8a.svg" />
+    <img alt="TailwindCSS" src="images/mdr/tailwindcss-dark-c01b5bc0.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Dart-161B22?style=for-the-badge&logo=dart&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Dart-F6F8FA?style=for-the-badge&logo=dart&logoColor=0F766E" />
-    <img alt="Dart" src="https://img.shields.io/badge/Dart-161B22?style=for-the-badge&logo=dart&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/dart-dark-544a50fd.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/dart-light-91fa3505.svg" />
+    <img alt="Dart" src="images/mdr/dart-dark-544a50fd.svg" />
   </picture>
 </p>
 
@@ -130,39 +130,39 @@
 
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Python-161B22?style=for-the-badge&logo=python&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Python-F6F8FA?style=for-the-badge&logo=python&logoColor=0F766E" />
-    <img alt="Python" src="https://img.shields.io/badge/Python-161B22?style=for-the-badge&logo=python&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/python-dark-eee76719.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/python-light-c401a649.svg" />
+    <img alt="Python" src="images/mdr/python-dark-eee76719.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/TensorFlow-161B22?style=for-the-badge&logo=tensorflow&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/TensorFlow-F6F8FA?style=for-the-badge&logo=tensorflow&logoColor=0F766E" />
-    <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-161B22?style=for-the-badge&logo=tensorflow&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/tensorflow-dark-4daf0baa.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/tensorflow-light-d954dff7.svg" />
+    <img alt="TensorFlow" src="images/mdr/tensorflow-dark-4daf0baa.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Keras-161B22?style=for-the-badge&logo=keras&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Keras-F6F8FA?style=for-the-badge&logo=keras&logoColor=0F766E" />
-    <img alt="Keras" src="https://img.shields.io/badge/Keras-161B22?style=for-the-badge&logo=keras&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/keras-dark-023ba7e1.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/keras-light-67f0829d.svg" />
+    <img alt="Keras" src="images/mdr/keras-dark-023ba7e1.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/NumPy-161B22?style=for-the-badge&logo=numpy&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/NumPy-F6F8FA?style=for-the-badge&logo=numpy&logoColor=0F766E" />
-    <img alt="NumPy" src="https://img.shields.io/badge/NumPy-161B22?style=for-the-badge&logo=numpy&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/numpy-dark-debab072.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/numpy-light-1e4dd3bf.svg" />
+    <img alt="NumPy" src="images/mdr/numpy-dark-debab072.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Pandas-161B22?style=for-the-badge&logo=pandas&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Pandas-F6F8FA?style=for-the-badge&logo=pandas&logoColor=0F766E" />
-    <img alt="Pandas" src="https://img.shields.io/badge/Pandas-161B22?style=for-the-badge&logo=pandas&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/pandas-dark-ba26f7ff.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/pandas-light-652b3629.svg" />
+    <img alt="Pandas" src="images/mdr/pandas-dark-ba26f7ff.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Docker-161B22?style=for-the-badge&logo=docker&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Docker-F6F8FA?style=for-the-badge&logo=docker&logoColor=0F766E" />
-    <img alt="Docker" src="https://img.shields.io/badge/Docker-161B22?style=for-the-badge&logo=docker&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/docker-dark-435c7b6d.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/docker-light-843fe4fc.svg" />
+    <img alt="Docker" src="images/mdr/docker-dark-435c7b6d.svg" />
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/GitHub-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
-    <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/GitHub-F6F8FA?style=for-the-badge&logo=github&logoColor=0F766E" />
-    <img alt="GitHub" src="https://img.shields.io/badge/GitHub-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/github-dark-a055faa9.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/github-light-91770718.svg" />
+    <img alt="GitHub" src="images/mdr/github-dark-a055faa9.svg" />
   </picture>
 </p>
 
@@ -177,14 +177,14 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=Powerisinschool&hide_border=true&count_private=true&show_icons=true&bg_color=0D1117&title_color=14B8A6&icon_color=14B8A6&text_color=C9D1D9" />
       <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=Powerisinschool&hide_border=true&count_private=true&show_icons=true&bg_color=F6F8FA&title_color=0F766E&icon_color=0F766E&text_color=24292F" />
-      <img height="175" alt="Tolu's GitHub Stats" src="https://github-readme-stats.vercel.app/api?username=Powerisinschool&hide_border=true&count_private=true&show_icons=true&bg_color=0D1117&title_color=14B8A6&icon_color=14B8A6&text_color=C9D1D9" />
+      <img height="175" alt="Tolu's GitHub Stats" src="images/mdr/tolu-s-github-stats-dark-9c307585.svg" />
     </picture>
   </a>
   <a href="https://github.com/Powerisinschool">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
       <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=F6F8FA&title_color=0F766E&text_color=24292F" />
-      <img height="175" alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
+      <img height="175" alt="Top Languages" src="images/mdr/top-languages-dark-4175b381.svg" />
     </picture>
   </a>
 </p>
@@ -194,7 +194,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=Powerisinschool&hide_border=true&background=0D1117&ring=14B8A6&fire=14B8A6&currStreakLabel=14B8A6&sideLabels=C9D1D9&currStreakNum=FFFFFF&sideNums=FFFFFF&dates=8B949E" />
       <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com/?user=Powerisinschool&hide_border=true&background=F6F8FA&ring=0F766E&fire=0F766E&currStreakLabel=0F766E&sideLabels=24292F&currStreakNum=1F2328&sideNums=1F2328&dates=57606A" />
-      <img alt="GitHub Streak" src="https://streak-stats.demolab.com/?user=Powerisinschool&hide_border=true&background=0D1117&ring=14B8A6&fire=14B8A6&currStreakLabel=14B8A6&sideLabels=C9D1D9&currStreakNum=FFFFFF&sideNums=FFFFFF&dates=8B949E" />
+      <img alt="GitHub Streak" src="images/mdr/github-streak-dark-bcec950e.svg" />
     </picture>
   </a>
 </p>
