@@ -3,7 +3,9 @@ set -euo pipefail
 
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+cargo fmt --all
+
 if git diff --cached --name-only | grep -Eq '^(README\.mdr|Cargo\.toml|src/.*|scripts/build\.sh)$'; then
     bash "$ROOT_DIR/scripts/build.sh" README
-    git add "$ROOT_DIR/README.md" "$ROOT_DIR/images"
+    git add "$ROOT_DIR/README.md" "$ROOT_DIR/images/mdr"
 fi

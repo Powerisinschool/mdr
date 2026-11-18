@@ -49,7 +49,7 @@ fi
 
 INPUT="${BASE}.mdr"
 OUTPUT="${BASE}.md"
-IMAGES_DIR="$(cd "$(dirname "$OUTPUT")" && pwd)/images"
+IMAGES_DIR="$(cd "$(dirname "$OUTPUT")" && pwd)/images/mdr"
 
 if [[ ! -f "$INPUT" ]]; then
     echo "Error: source file '$INPUT' not found." >&2
@@ -80,7 +80,7 @@ if [[ "$CHECK_MODE" == true ]]; then
             echo "Error: missing localized image '$img_path'. Run scripts/build.sh." >&2
             exit 1
         fi
-    done < <(grep -oE 'images/[a-zA-Z0-9._-]+' "$TMP_OUT" | sort -u)
+    done < <(grep -oE 'images/mdr/[a-zA-Z0-9._-]+' "$TMP_OUT" | sort -u)
 
     echo "OK: '$OUTPUT' and local images are up to date."
 else

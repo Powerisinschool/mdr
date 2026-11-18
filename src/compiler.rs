@@ -362,7 +362,8 @@ mod tests {
         Options {
             input_path: PathBuf::from("README.mdr"),
             output_path: PathBuf::from("README.md"),
-            images_dir: PathBuf::from("/tmp/mdr_nonexistent_test_images"),
+            images_dir: PathBuf::from("/tmp/mdr_nonexistent_test_images/mdr"),
+            images_url_prefix: "images/mdr".to_string(),
             refresh_images: false,
             no_fetch: true,
         }
@@ -387,7 +388,7 @@ mod tests {
         assert!(!out.contains("@def"));
         assert!(out.starts_with("<p>\n  <picture>"));
         assert!(out.contains("alt=\"C++\""));
-        assert!(out.contains("src=\"images/cpp-dark-"));
+        assert!(out.contains("src=\"images/mdr/cpp-dark-"));
         assert!(out.ends_with('\n'));
         assert_eq!(refs.len(), 2);
     }
@@ -422,7 +423,7 @@ mod tests {
         assert!(out.starts_with("<a href=\"https://github.com/Powerisinschool\">\n  <picture>"));
         assert!(out.contains(&format!("srcset=\"{expected_dark_src}\"")));
         assert!(out.contains(&format!("srcset=\"{expected_light_src}\"")));
-        assert!(out.contains("<img height=\"175\" alt=\"Stats\" src=\"images/stats-dark-"));
+        assert!(out.contains("<img height=\"175\" alt=\"Stats\" src=\"images/mdr/stats-dark-"));
         assert!(!out.contains("live"));
         assert!(out.ends_with("</picture>\n</a>\n"));
     }
@@ -439,9 +440,9 @@ mod tests {
 
         assert!(out.contains("![Diagram](./docs/architecture.png)"));
         assert!(out.contains(
-            "<picture>\n  <source srcset=\"https://example.com/ping.svg\" />\n  <img alt=\"LivePing\" src=\"images/liveping-"
+            "<picture>\n  <source srcset=\"https://example.com/ping.svg\" />\n  <img alt=\"LivePing\" src=\"images/mdr/liveping-"
         ));
-        assert!(out.contains("<img width=\"120\" alt=\"StaticLogo\" src=\"images/staticlogo-"));
+        assert!(out.contains("<img width=\"120\" alt=\"StaticLogo\" src=\"images/mdr/staticlogo-"));
         assert_eq!(refs.len(), 2);
     }
 }

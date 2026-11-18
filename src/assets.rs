@@ -5,6 +5,13 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
+const NOTICE_FILENAME: &str = "README.md";
+const NOTICE_CONTENT: &str = "\
+# Managed Assets Directory\n\n\
+> **Do not place manual files here.** This directory is managed automatically by `mdr`. \
+Any file not referenced by a compiled `.mdr` template is pruned on build. \
+Store manual images in `images/` instead.\n";
+
 pub fn is_external_url(url: &str) -> bool {
     url.starts_with("http://") || url.starts_with("https://")
 }
@@ -32,17 +39,17 @@ pub fn localize_url(
     if !opts.refresh_images {
         if let Some(existing_name) = find_cached_file(&opts.images_dir, &stem) {
             referenced_images.insert(existing_name.clone());
-            return format!("images/{existing_name}");
+            return format!("{}/{existing_name}", opts.images_url_prefix);
         }
     }
 
     if opts.no_fetch {
         let fallback = format!("{stem}.{}", guess_ext_from_url(url).unwrap_or("svg"));
         referenced_images.insert(fallback.clone());
-        return format!("images/{fallback}");
+        return format!("{}/{fallback}", opts.images_url_prefix);
     }
 
-    if let Err(err) = fs::create_dir_all(&opts.images_dir) {
+    if let Err(err) = ensure_managed_dir(&opts.images_dir) {
         eprintln!(
             "Warning: image resource ({url}) failed to load (could not create {}: {err}); direct URL was used.",
             opts.images_dir.display()
@@ -100,7 +107,7 @@ pub fn localize_url(
     let _ = fs::remove_file(&tmp_hdr);
 
     referenced_images.insert(filename.clone());
-    format!("images/{filename}")
+    format!("{}/{filename}", opts.images_url_prefix)
 }
 
 pub fn prune_unused_images(dir: &Path, referenced: &HashSet<String>) {
@@ -111,11 +118,20 @@ pub fn prune_unused_images(dir: &Path, referenced: &HashSet<String>) {
         let path = entry.path();
         if path.is_file() {
             let name = entry.file_name().to_string_lossy().to_string();
-            if !referenced.contains(&name) {
+            if name != NOTICE_FILENAME && !referenced.contains(&name) {
                 let _ = fs::remove_file(path);
             }
         }
     }
+}
+
+fn ensure_managed_dir(dir: &Path) -> std::io::Result<()> {
+    fs::create_dir_all(dir)?;
+    let notice_path = dir.join(NOTICE_FILENAME);
+    if !notice_path.exists() {
+        fs::write(notice_path, NOTICE_CONTENT)?;
+    }
+    Ok(())
 }
 
 fn find_cached_file(dir: &Path, stem: &str) -> Option<String> {
@@ -233,6 +249,7 @@ mod tests {
             input_path: PathBuf::from("README.mdr"),
             output_path: PathBuf::from("README.md"),
             images_dir: images_dir.to_path_buf(),
+            images_url_prefix: "images/mdr".to_string(),
             refresh_images: false,
             no_fetch,
         }
@@ -270,23 +287,27 @@ Content-Type: image/svg+xml; charset=utf-8\r\n";
     #[test]
     fn reuses_cached_asset_without_network() {
         let tmp = TempDir::new("cache_hit");
+        let managed = tmp.path().join("mdr");
+        fs::create_dir_all(&managed).unwrap();
+
         let url = "https://img.shields.io/badge/Rust-161B22";
         let hash = hash_url(url);
         let cached_name = format!("rust-dark-{hash}.svg");
-        fs::write(tmp.path().join(&cached_name), "<svg></svg>").unwrap();
+        fs::write(managed.join(&cached_name), "<svg></svg>").unwrap();
 
-        let opts = test_opts(tmp.path(), false);
+        let opts = test_opts(&managed, false);
         let mut referenced = HashSet::new();
         let resolved = localize_url(url, "Rust", Some("dark"), &opts, &mut referenced);
 
-        assert_eq!(resolved, format!("images/{cached_name}"));
+        assert_eq!(resolved, format!("images/mdr/{cached_name}"));
         assert!(referenced.contains(&cached_name));
     }
 
     #[test]
     fn falls_back_to_direct_url_when_fetch_fails() {
         let tmp = TempDir::new("fetch_fail");
-        let opts = test_opts(tmp.path(), false);
+        let managed = tmp.path().join("mdr");
+        let opts = test_opts(&managed, false);
         let mut referenced = HashSet::new();
         let bad_url = "http://127.0.0.1:0/unreachable-badge.svg";
 
@@ -299,16 +320,23 @@ Content-Type: image/svg+xml; charset=utf-8\r\n";
     #[test]
     fn prunes_only_unreferenced_images() {
         let tmp = TempDir::new("prune");
-        let keep_file = tmp.path().join("rust-dark-12345678.svg");
-        let stale_file = tmp.path().join("old-badge-deadbeef.svg");
+        let manual_wave = tmp.path().join("wave.gif");
+        let managed = tmp.path().join("mdr");
+        ensure_managed_dir(&managed).unwrap();
+
+        let keep_file = managed.join("rust-dark-12345678.svg");
+        let stale_file = managed.join("old-badge-deadbeef.svg");
+        fs::write(&manual_wave, "GIF89a").unwrap();
         fs::write(&keep_file, "<svg/>").unwrap();
         fs::write(&stale_file, "<svg/>").unwrap();
 
         let mut referenced = HashSet::new();
         referenced.insert("rust-dark-12345678.svg".to_string());
 
-        prune_unused_images(tmp.path(), &referenced);
+        prune_unused_images(&managed, &referenced);
 
+        assert!(manual_wave.exists());
+        assert!(managed.join(NOTICE_FILENAME).exists());
         assert!(keep_file.exists());
         assert!(!stale_file.exists());
     }

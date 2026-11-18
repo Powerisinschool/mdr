@@ -2,7 +2,7 @@
 .junie/
 
 # Binary Output
-mdr
+/mdr
 
 # Cargo Artifacts
 /target/
