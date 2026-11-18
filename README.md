@@ -187,8 +187,8 @@
   </a>
   <a href="https://github.com/Powerisinschool">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=0D1117&title_color=14B8A6&text_color=C9D1D9" />
-      <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color=F6F8FA&title_color=0F766E&text_color=24292F" />
+      <source media="(prefers-color-scheme: dark)" srcset="images/mdr/top-languages-dark-4175b381.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="images/mdr/top-languages-light-8c0da5ed.svg" />
       <img height="175" alt="Top Languages" src="images/mdr/top-languages-dark-4175b381.svg" />
     </picture>
   </a>
