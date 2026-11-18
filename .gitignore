@@ -1,5 +1,8 @@
 # JetBrains IDEs
 .junie/
 
-# Binary output
+# Binary Output
 mdr
+
+# Cargo Artifacts
+/target/

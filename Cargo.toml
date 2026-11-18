@@ -1,0 +1,7 @@
+[package]
+name = "mdr"
+version = "0.1.0"
+edition = "2021"
+description = "Responsive Markdown compiler with theme tokens, macros, and local asset caching"
+
+[dependencies]

@@ -88,16 +88,16 @@
 <div align="center">
 
 <p>
-  [![Tolu's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Powerisinschool&hide_border=true&count_private=true&show_icons=true&bg_color={bg}&title_color={accent}&icon_color={accent}&text_color={text}){height=175}](https://github.com/Powerisinschool)
-  [![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color={bg}&title_color={accent}&text_color={text}){height=175}](https://github.com/Powerisinschool)
+  [![Tolu's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Powerisinschool&hide_border=true&count_private=true&show_icons=true&bg_color={bg}&title_color={accent}&icon_color={accent}&text_color={text}){height=175 live}](https://github.com/Powerisinschool)
+  [![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Powerisinschool&layout=compact&langs_count=8&hide=ejs,html,css,Jupyter+Notebook&hide_border=true&bg_color={bg}&title_color={accent}&text_color={text}){height=175 live}](https://github.com/Powerisinschool)
 </p>
 
 <p>
-  [![GitHub Streak](https://streak-stats.demolab.com/?user=Powerisinschool&hide_border=true&background={bg}&ring={accent}&fire={accent}&currStreakLabel={accent}&sideLabels={text}&currStreakNum={num}&sideNums={num}&dates={muted})](https://github.com/Powerisinschool)
+  [![GitHub Streak](https://streak-stats.demolab.com/?user=Powerisinschool&hide_border=true&background={bg}&ring={accent}&fire={accent}&currStreakLabel={accent}&sideLabels={text}&currStreakNum={num}&sideNums={num}&dates={muted}){live}](https://github.com/Powerisinschool)
 </p>
 
 <p>
-  ![Contribution Graph](https://github-readme-activity-graph.vercel.app/graph?username=Powerisinschool&bg_color={bg}&color={text}&line={accent}&point={num}&area=true&area_color=14B8A6&hide_border=true)
+  ![Contribution Graph](https://github-readme-activity-graph.vercel.app/graph?username=Powerisinschool&bg_color={bg}&color={text}&line={accent}&point={num}&area=true&area_color=14B8A6&hide_border=true){live}
 </p>
 
 </div>
