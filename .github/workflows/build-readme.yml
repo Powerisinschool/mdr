@@ -6,24 +6,32 @@ on:
     paths:
       - "README.mdr"
       - "scripts/mdr.rs"
+      - "scripts/build.sh"
+  pull_request:
+    branches: [main]
+    paths:
+      - "README.mdr"
+      - "scripts/mdr.rs"
+      - "scripts/build.sh"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  compile-readme:
+  build-readme:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile and run mdr
-        run: |
-          rustc -O scripts/mdr.rs -o /tmp/mdr
-          /tmp/mdr README.mdr README.md
+      - name: Verify README on Pull Requests
+        if: github.event_name == 'pull_request'
+        run: bash scripts/build.sh README --check
 
-      - name: Commit updated README.md
+      - name: Compile and commit README on push
+        if: github.event_name != 'pull_request'
         run: |
+          bash scripts/build.sh README
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md

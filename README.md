@@ -6,7 +6,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
     <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=0F766E&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" alt="Typing SVG" />
+    <img alt="Typing SVG" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=19&pause=1000&color=14B8A6&center=true&vCenter=true&width=440&lines=Systems+%26+Low-Level+Engineer;Full-Stack+Web+Developer;CS+Student+%40+University+of+London" />
   </picture>
 </a>
 
@@ -15,14 +15,14 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" />
       <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/tolu%40olagunju.ng-F6F8FA?style=for-the-badge&logo=gmail&logoColor=0F766E" />
-      <img src="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" alt="Email" />
+      <img alt="Email" src="https://img.shields.io/badge/tolu%40olagunju.ng-161B22?style=for-the-badge&logo=gmail&logoColor=14B8A6" />
     </picture>
   </a>
   <a href="https://github.com/Powerisinschool?tab=repositories">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
       <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/Repositories-F6F8FA?style=for-the-badge&logo=github&logoColor=0F766E" />
-      <img src="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" alt="Repositories" />
+      <img alt="Repositories" src="https://img.shields.io/badge/Repositories-161B22?style=for-the-badge&logo=github&logoColor=14B8A6" />
     </picture>
   </a>
 </p>

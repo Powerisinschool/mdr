@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+
+if git diff --cached --name-only | grep -Eq '^(README\.mdr|scripts/(mdr\.rs|build\.sh))$'; then
+    bash "$ROOT_DIR/scripts/build.sh" README
+    git add "$ROOT_DIR/README.md"
+fi
