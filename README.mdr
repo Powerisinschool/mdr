@@ -62,6 +62,7 @@
 <p>
   @badge(TypeScript, TypeScript, typescript)
   @badge(JavaScript, JavaScript, javascript)
+  @badge(Astro, Astro, astro)
   @badge(React, React, react)
   @badge(Angular, Angular, angular)
   @badge(NodeJS, Node.js, nodedotjs)

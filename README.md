@@ -100,6 +100,11 @@
     <img alt="JavaScript" src="images/mdr/javascript-dark-e67be307.svg" />
   </picture>
   <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/mdr/astro-dark-71711fdf.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/mdr/astro-light-82076d7f.svg" />
+    <img alt="Astro" src="images/mdr/astro-dark-71711fdf.svg" />
+  </picture>
+  <picture>
     <source media="(prefers-color-scheme: dark)" srcset="images/mdr/react-dark-cd4428d0.svg" />
     <source media="(prefers-color-scheme: light)" srcset="images/mdr/react-light-2801077f.svg" />
     <img alt="React" src="images/mdr/react-dark-cd4428d0.svg" />
