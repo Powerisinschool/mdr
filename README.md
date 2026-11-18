@@ -213,3 +213,5 @@
 </p>
 
 </div>
+
+<sub>🌗 This profile adapts to your theme. Switch your system to light or dark mode to see it change.</sub>
