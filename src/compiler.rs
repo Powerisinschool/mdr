@@ -22,39 +22,49 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
     let mut ctx = Context::default();
     let mut body_lines = Vec::new();
     let mut skip_next_blank = false;
+    let mut in_fence = false;
 
-    // Pass 1: Collect @theme and @def declarations
+    // Pass 1: Collect @theme and @def declarations, omitting fenced code blocks and blank lines after declarations
     for line in source.lines() {
         let trimmed = line.trim();
-        if let Some(rest) = trimmed.strip_prefix("@theme ") {
-            if let Some((name, vals)) = rest.split_once('=') {
-                if let Some((dark, light)) = vals.split_once('|') {
-                    ctx.themes.insert(
-                        name.trim().to_string(),
-                        (dark.trim().to_string(), light.trim().to_string()),
-                    );
-                    skip_next_blank = true;
-                    continue;
+        if trimmed.starts_with("```") || trimmed.starts_with("~~~") {
+            in_fence = !in_fence;
+            skip_next_blank = false;
+            body_lines.push(line);
+            continue;
+        }
+
+        if !in_fence {
+            if let Some(rest) = trimmed.strip_prefix("@theme ") {
+                if let Some((name, vals)) = rest.split_once('=') {
+                    if let Some((dark, light)) = vals.split_once('|') {
+                        ctx.themes.insert(
+                            name.trim().to_string(),
+                            (dark.trim().to_string(), light.trim().to_string()),
+                        );
+                        skip_next_blank = true;
+                        continue;
+                    }
                 }
-            }
-        } else if let Some(rest) = trimmed.strip_prefix("@def ") {
-            if let Some((sig, body)) = rest.split_once('=') {
-                if let (Some(open), Some(close)) = (sig.find('('), sig.rfind(')')) {
-                    let name = sig[..open].trim().to_string();
-                    let params = sig[open + 1..close]
-                        .split(',')
-                        .map(|p| p.trim().to_string())
-                        .filter(|p| !p.is_empty())
-                        .collect();
-                    ctx.macros.insert(
-                        name,
-                        MacroDef {
-                            params,
-                            body: body.trim().to_string(),
-                        },
-                    );
-                    skip_next_blank = true;
-                    continue;
+            } else if let Some(rest) = trimmed.strip_prefix("@def ") {
+                if let Some((sig, body)) = rest.split_once('=') {
+                    if let (Some(open), Some(close)) = (sig.find('('), sig.rfind(')')) {
+                        let name = sig[..open].trim().to_string();
+                        let params = sig[open + 1..close]
+                            .split(',')
+                            .map(|p| p.trim().to_string())
+                            .filter(|p| !p.is_empty())
+                            .collect();
+                        ctx.macros.insert(
+                            name,
+                            MacroDef {
+                                params,
+                                body: body.trim().to_string(),
+                            },
+                        );
+                        skip_next_blank = true;
+                        continue;
+                    }
                 }
             }
         }
@@ -69,9 +79,21 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
 
     // Pass 2 & 3: Expand macros, localize images, and render <picture> blocks
     let mut out = Vec::with_capacity(body_lines.len());
+    let mut in_fence = false;
     for line in body_lines {
-        let expanded = expand_macros(line, &ctx.macros);
-        out.push(process_images(&expanded, &ctx, opts, referenced_images));
+        let trimmed = line.trim();
+        if trimmed.starts_with("```") || trimmed.starts_with("~~~") {
+            in_fence = !in_fence;
+            out.push(line.to_string());
+            continue;
+        }
+
+        if in_fence {
+            out.push(line.to_string());
+        } else {
+            let expanded = expand_macros(line, &ctx.macros);
+            out.push(process_images(&expanded, &ctx, opts, referenced_images));
+        }
     }
 
     let mut result = out.join("\n");

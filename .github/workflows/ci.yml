@@ -11,4 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cargo test
+
+      - name: Run unit tests
+        run: cargo test
+
+      - name: Verify README.md matches README.mdr
+        run: |
+          TMP_OUT="$(mktemp)"
+          cargo run --release -- README.mdr "$TMP_OUT" --no-fetch --images-dir images/mdr --images-prefix images/mdr
+          diff -u README.md "$TMP_OUT"
+          while IFS= read -r img_path; do
+            test -f "$img_path"
+          done < <(grep -oE 'images/mdr/[a-zA-Z0-9._-]+' "$TMP_OUT" | sort -u)

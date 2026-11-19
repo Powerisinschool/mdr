@@ -1,0 +1,86 @@
+@theme bg = 0D1117 | F6F8FA
+@theme card = 161B22 | F6F8FA
+@theme accent = 14B8A6 | 0F766E
+
+@def badge(alt, label, logo) = ![{alt}](https://img.shields.io/badge/{label}-{card}?style=for-the-badge&logo={logo}&logoColor={accent})
+@def link_badge(alt, label, logo, href) = [![{alt}](https://img.shields.io/badge/{label}-{card}?style=for-the-badge&logo={logo}&logoColor={accent})]({href})
+
+<div align="center">
+
+# `mdr`
+
+**Responsive Markdown compiler with theme tokens, macros, and local asset caching.**
+
+<p>
+  @badge(Zero Dependencies, Rust_std_only, rust)
+  @link_badge(CI Status, CI, githubactions, https://github.com/Powerisinschool/mdr/actions)
+  @link_badge(Repository, Powerisinschool%2Fmdr, github, https://github.com/Powerisinschool/mdr)
+</p>
+
+</div>
+
+---
+
+### Why `mdr`?
+
+GitHub Markdown supports dark and light theme switching through `<picture>` and `<source media="(prefers-color-scheme: ...)">` tags, but writing them by hand turns clean READMEs into repetitive HTML boilerplate[cite: 1].
+
+- **Theme Tokens (`@theme`):** Declare paired dark and light values once and reference them anywhere with `{token}`[cite: 1].
+- **Macros (`@def`):** Collapse repeated badge and component markup into single-line calls[cite: 1].
+- **Automatic `<picture>` Expansion:** Any image URL containing a `@theme` token or `{live}` flag compiles into a responsive `<picture>` element automatically[cite: 1].
+- **Local Asset Caching (`images/mdr/`):** External images are downloaded, content-hashed, and served locally from `images/mdr/`, with automatic pruning of unused assets and graceful fallback to direct URLs on network failure.
+- **Live Widget Snapshots (`{live}`):** Dynamic stats cards keep their remote URLs in `<source>` while storing a local fallback snapshot in `<img>`.
+- **Zero Dependencies:** Built strictly on the Rust standard library (`std`) for sub-second CI compilation.
+
+---
+
+### Quick Start
+
+```bash
+# Build and run from source
+cargo run --release -- README.mdr README.md
+
+# Or install locally via Cargo
+cargo install --path .
+mdr README.mdr README.md
+
+```
+
+**CLI Flags**
+
+| Flag | Description |
+| --- | --- |
+| `--images-dir <PATH>` | Directory for managed assets (default: `<output_dir>/images/mdr`) |
+| `--images-prefix <PREFIX>` | URL prefix emitted in compiled Markdown (default: `images/mdr`) |
+| `--refresh-images` | Re-download all external images and `{live}` fallback snapshots |
+| `--no-fetch` | Skip network requests and use cached/expected local paths |
+
+---
+
+### Syntax Overview
+
+```mdr
+@theme card = 161B22 | F6F8FA
+@theme accent = 14B8A6 | 0F766E
+
+@def badge(alt, label, logo) = ![{alt}](https://img.shields.io/badge/{label}-{card}?style=for-the-badge&logo={logo}&logoColor={accent})
+
+# Static themed badge (cached in images/mdr/)
+@badge(Rust, Rust, rust)
+
+# Live remote image with local fallback snapshot
+[![Stats](https://github-readme-stats.vercel.app/api?username=Powerisinschool&title_color={accent}){height=175 live}](https://github.com/Powerisinschool)
+```
+
+---
+
+### Roadmap
+
+* [x] `@theme` dark/light palette tokens and `@def` parameterized macros
+* [x] Automatic `<picture>` expansion and `{live}` local fallback snapshots
+* [x] Isolated `images/mdr/` asset caching, pruning, and offline fallback warnings
+* [ ] CLI output path inference (`mdr <file>.mdr`) and composite GitHub Action (`action.yml`)
+* [ ] Unified `Value` model with `@var` constants and `@list` tuple declarations
+* [ ] Nested `@repeat` loops and resilient `@expand` windowing blocks
+* [ ] `@include` composition for `.mdr` partials and local/remote `.json` feeds
+* [ ] Multi-platform GitHub Releases and Homebrew tap (`brew install Powerisinschool/tap/mdr`)
