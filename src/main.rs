@@ -1,12 +1,21 @@
 mod assets;
 mod compiler;
 
+use std::borrow::Cow;
 use std::collections::HashSet;
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process;
 
+#[derive(Debug)]
+pub enum CliAction {
+    Run(Options),
+    Help,
+    Version,
+}
+
+#[derive(Debug)]
 pub struct Options {
     pub input_path: PathBuf,
     pub output_path: PathBuf,
@@ -16,8 +25,35 @@ pub struct Options {
     pub no_fetch: bool,
 }
 
+impl Default for Options {
+    fn default() -> Self {
+        Options {
+            input_path: PathBuf::from("README.mdr"),
+            output_path: PathBuf::from("README.md"),
+            images_dir: PathBuf::from("./images/mdr"),
+            images_url_prefix: "images/mdr".to_string(),
+            refresh_images: false,
+            no_fetch: false,
+        }
+    }
+}
+
 fn main() {
-    let opts = parse_args();
+    let opts = match parse_args_from(env::args().skip(1)) {
+        Ok(CliAction::Run(opts)) => opts,
+        Ok(CliAction::Help) => {
+            print_help();
+            process::exit(0);
+        }
+        Ok(CliAction::Version) => {
+            println!("{} {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+            process::exit(0);
+        }
+        Err(err) => {
+            eprintln!("Error: {err}");
+            process::exit(1);
+        }
+    };
 
     let source = fs::read_to_string(&opts.input_path).unwrap_or_else(|err| {
         eprintln!("Failed to read {}: {err}", opts.input_path.display());
@@ -37,51 +73,93 @@ fn main() {
     });
 }
 
-fn parse_args() -> Options {
-    let args: Vec<String> = env::args().skip(1).collect();
+fn parse_args_from<I, S>(args: I) -> Result<CliAction, String>
+where
+    I: IntoIterator<Item = S>,
+    S: Into<String>,
+{
+    let mut iter_args = args.into_iter().map(Into::into);
+
+    let grouped_args = std::iter::from_fn(move || {
+        let arg = iter_args.next()?;
+
+        let take_n = match arg.as_str() {
+            "--images-dir" | "--images-prefix" => 1,
+            _ => 0,
+        };
+
+        let params: Vec<String> = iter_args.by_ref().take(take_n).collect();
+
+        Some((arg, params))
+    });
+
     let mut positional = Vec::new();
     let mut images_dir: Option<PathBuf> = None;
     let mut images_prefix: Option<String> = None;
     let mut refresh_images = false;
     let mut no_fetch = false;
 
-    let mut i = 0;
-    while i < args.len() {
-        match args[i].as_str() {
+    for (arg, params) in grouped_args {
+        match arg.as_str() {
+            "--help" | "-h" => return Ok(CliAction::Help),
+            "--version" | "-V" => return Ok(CliAction::Version),
             "--images-dir" => {
-                i += 1;
-                let val = args.get(i).unwrap_or_else(|| {
-                    eprintln!("--images-dir requires a path");
-                    process::exit(1);
-                });
-                images_dir = Some(PathBuf::from(val));
+                if params.is_empty() || params[0].starts_with('-') {
+                    return Err("--images-dir requires a path".into());
+                }
+                images_dir = Some(PathBuf::from(&params[0]));
             }
             "--images-prefix" => {
-                i += 1;
-                let val = args.get(i).unwrap_or_else(|| {
-                    eprintln!("--images-prefix requires a relative URL path");
-                    process::exit(1);
-                });
-                images_prefix = Some(val.trim_end_matches('/').to_string());
+                if params.is_empty() || params[0].starts_with('-') {
+                    return Err("--images-prefix requires a path".into());
+                }
+                images_prefix = Some(params[0].trim_end_matches('/').to_string());
             }
             "--refresh-images" => refresh_images = true,
             "--no-fetch" => no_fetch = true,
             flag if flag.starts_with('-') => {
-                eprintln!("Unknown flag: {flag}");
-                process::exit(1);
+                return Err(format!("Unknown flag: {flag}"));
             }
             val => positional.push(val.to_string()),
         }
-        i += 1;
     }
 
-    let input_path = PathBuf::from(
-        positional
-            .first()
-            .map(String::as_str)
-            .unwrap_or("README.mdr"),
-    );
-    let output_path = PathBuf::from(positional.get(1).map(String::as_str).unwrap_or("README.md"));
+    if positional.len() > 2 {
+        return Err(format!(
+            "Expected at most 2 positional arguments (INPUT and OUTPUT), got {}",
+            positional.len()
+        ));
+    }
+
+    let input_str = positional
+        .first()
+        .map(String::as_str)
+        .unwrap_or("README.mdr");
+    let output_str: Cow<'_, str> = positional
+        .get(1)
+        .map(|s| Cow::Borrowed(s.as_str()))
+        .unwrap_or_else(|| {
+            let input_path = Path::new(input_str);
+            if input_path.file_stem().is_some() {
+                Cow::Owned(
+                    input_path
+                        .with_extension("md")
+                        .to_string_lossy()
+                        .into_owned(),
+                )
+            } else {
+                Cow::Borrowed("README.md")
+            }
+        });
+
+    if Path::new(input_str) == Path::new(output_str.as_ref()) {
+        return Err(format!(
+            "Input and output paths cannot be the same: {input_str}"
+        ));
+    }
+
+    let input_path = PathBuf::from(input_str);
+    let output_path = PathBuf::from(output_str.to_string());
 
     let output_dir = output_path
         .parent()
@@ -91,26 +169,65 @@ fn parse_args() -> Options {
     let resolved_images_dir = images_dir.unwrap_or_else(|| output_dir.join("images").join("mdr"));
 
     let images_url_prefix = images_prefix.unwrap_or_else(|| {
-        if resolved_images_dir.is_relative() {
+        if let Ok(stripped) = resolved_images_dir.strip_prefix(output_dir) {
+            stripped
+                .to_string_lossy()
+                .trim_end_matches('/')
+                .replace('\\', "/")
+        } else if resolved_images_dir.is_relative() {
             resolved_images_dir
                 .to_string_lossy()
                 .trim_start_matches("./")
                 .trim_end_matches('/')
                 .replace('\\', "/")
         } else {
-            resolved_images_dir
-                .strip_prefix(output_dir)
-                .map(|p| p.to_string_lossy().replace('\\', "/"))
-                .unwrap_or_else(|_| "images/mdr".to_string())
+            "images/mdr".to_string()
         }
     });
 
-    Options {
+    Ok(CliAction::Run(Options {
         input_path,
         output_path,
         images_dir: resolved_images_dir,
         images_url_prefix,
         refresh_images,
         no_fetch,
+    }))
+}
+
+fn print_help() {
+    let help_text = r#"Usage: mdr [OPTIONS] [INPUT] [OUTPUT]
+Options:
+  --images-dir <DIR>       Directory to store cached images (default: ./images/mdr)
+  --images-prefix <URL>    URL prefix for images (default: relative path to images directory)
+  --refresh-images         Refresh cached images even if they exist
+  --no-fetch               Do not fetch or prune images
+  -h, --help               Print this help message
+  -V, --version            Print version information
+Arguments:
+  INPUT                    Input Markdown file (default: README.mdr)
+  OUTPUT                   Output Markdown file (default: <INPUT> with .md extension)
+"#;
+    println!("{help_text}");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn infers_output_path_from_single_mdr_arg() {
+        let CliAction::Run(opts) = parse_args_from(["docs/guide.mdr"]).unwrap() else {
+            panic!("expected CliAction::Run");
+        };
+
+        assert_eq!(opts.input_path, PathBuf::from("docs/guide.mdr"));
+        assert_eq!(opts.output_path, PathBuf::from("docs/guide.md"));
+    }
+
+    #[test]
+    fn rejects_overwriting_existing_md_input() {
+        let err = parse_args_from(["README.md"]).unwrap_err();
+        assert!(err.contains("same"));
     }
 }
