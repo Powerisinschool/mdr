@@ -10,10 +10,10 @@ runs:
         cargo build --release --quiet --manifest-path "$GITHUB_ACTION_PATH/Cargo.toml"
         BIN="$GITHUB_ACTION_PATH/target/release/mdr"
 
-        INPUT=("${{ inputs.input }}")
-        OUTPUT=("${{ inputs.output }}")
-        IMAGES_DIR=("${{ inputs.images-dir }}")
-        IMAGES_PREFIX=("${{ inputs.images-prefix }}")
+        INPUT="${{ inputs.input }}"
+        OUTPUT="${{ inputs.output }}"
+        IMAGES_DIR="${{ inputs.images-dir }}"
+        IMAGES_PREFIX="${{ inputs.images-prefix }}"
         
         ARGS=("$INPUT")
         if [[ -n "$OUTPUT" ]]; then
@@ -47,8 +47,9 @@ runs:
           diff -u "$TARGET_OUT" "$TMP_OUT"
         
           OUT_DIR="$(dirname "$TARGET_OUT")"
-          PREFIX="${IMAGES_PREFIX:-images/mdr}"
-          PREFIX="${PREFIX%/}"
+          DEFAULT_PREFIX="${IMAGES_DIR:-images/mdr}"
+          PREFIX="${IMAGES_PREFIX:-$DEFAULT_PREFIX}"
+          PREFIX="${PREFIX#./}"
           while IFS= read -r img_path; do
             test -f "$OUT_DIR/$img_path"
           done < <(grep -oE "${PREFIX}/[a-zA-Z0-9._-]+" "$TMP_OUT" | sort -u)
