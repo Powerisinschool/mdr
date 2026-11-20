@@ -1,0 +1,84 @@
+name: "mdr"
+description: "Responsive Markdown compiler with theme tokens, macros, and local asset caching"
+author: "Tolulope Olagunju"
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        set -euo pipefail
+        cargo build --release --quiet --manifest-path "$GITHUB_ACTION_PATH/Cargo.toml"
+        BIN="$GITHUB_ACTION_PATH/target/release/mdr"
+
+        INPUT=("${{ inputs.input }}")
+        OUTPUT=("${{ inputs.output }}")
+        IMAGES_DIR=("${{ inputs.images-dir }}")
+        IMAGES_PREFIX=("${{ inputs.images-prefix }}")
+        
+        ARGS=("$INPUT")
+        if [[ -n "$OUTPUT" ]]; then
+          ARGS+=("$OUTPUT")
+        fi
+        if [[ -n "$IMAGES_DIR" ]]; then
+          ARGS+=("--images-dir" "$IMAGES_DIR")
+        fi
+        if [[ -n "$IMAGES_PREFIX" ]]; then
+          ARGS+=("--images-prefix" "$IMAGES_PREFIX")
+        fi
+        if [[ "${{ inputs.refresh-images }}" == "true" ]]; then
+          ARGS+=("--refresh-images")
+        fi
+
+        if [[ "${{ inputs.check }}" == "true" ]]; then
+          TARGET_OUT="${OUTPUT:-${INPUT%.mdr}.md}"
+          TMP_OUT="$(mktemp "${TARGET_OUT}.XXXXXX")"
+          trap 'rm -f "$TMP_OUT"' EXIT
+        
+          CHECK_ARGS=("$INPUT" "$TMP_OUT" "--no-fetch")
+        
+          if [[ -n "$IMAGES_DIR" ]]; then
+            CHECK_ARGS+=("--images-dir" "$IMAGES_DIR")
+          fi
+          if [[ -n "$IMAGES_PREFIX" ]]; then
+            CHECK_ARGS+=("--images-prefix" "$IMAGES_PREFIX")
+          fi
+        
+          "$BIN" "${CHECK_ARGS[@]}"
+          diff -u "$TARGET_OUT" "$TMP_OUT"
+        
+          OUT_DIR="$(dirname "$TARGET_OUT")"
+          PREFIX="${IMAGES_PREFIX:-images/mdr}"
+          PREFIX="${PREFIX%/}"
+          while IFS= read -r img_path; do
+            test -f "$OUT_DIR/$img_path"
+          done < <(grep -oE "${PREFIX}/[a-zA-Z0-9._-]+" "$TMP_OUT" | sort -u)
+        else
+          "$BIN" "${ARGS[@]}"
+        fi
+      shell: "bash"
+
+inputs:
+    input:
+      description: "Input Markdown file (default: README.mdr)"
+      required: false
+      default: "README.mdr"
+    output:
+      description: "Output Markdown file (default: <INPUT> with .md extension)"
+      required: false
+      default: ""
+    images-dir:
+      description: "Directory to store images (default: <OUTPUT_DIR>/images/mdr)"
+      required: false
+      default: ""
+    images-prefix:
+      description: "URL prefix for images (default: relative path from <OUTPUT_DIR> to <IMAGES_DIR>)"
+      required: false
+      default: ""
+    refresh-images:
+      description: "Force re-download of images even if they exist in the cache"
+      required: false
+      default: "false"
+    check:
+      description: "Verify output Markdown and cached images are in sync without overwriting"
+      required: false
+      default: "false"
