@@ -8,14 +8,14 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum CliAction {
     Run(Options),
     Help,
     Version,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Options {
     pub input_path: PathBuf,
     pub output_path: PathBuf,
@@ -223,6 +223,63 @@ mod tests {
 
         assert_eq!(opts.input_path, PathBuf::from("docs/guide.mdr"));
         assert_eq!(opts.output_path, PathBuf::from("docs/guide.md"));
+    }
+
+    #[test]
+    fn infers_proper_images_dir_and_prefix() {
+        let CliAction::Run(opts) = parse_args_from(["docs/guide.mdr"]).unwrap() else {
+            panic!("expected CliAction::Run");
+        };
+
+        assert_eq!(opts.images_dir, PathBuf::from("docs/images/mdr"));
+        assert_eq!(opts.images_url_prefix, "images/mdr");
+    }
+
+    #[test]
+    fn images_prefix_trims_when_given_trailing_slash() {
+        let CliAction::Run(opts) = parse_args_from(["--images-prefix", "assets/mdr/"]).unwrap()
+        else {
+            panic!("expected CliAction::Run");
+        };
+
+        assert_eq!(opts.images_url_prefix, "assets/mdr");
+    }
+
+    #[test]
+    fn flag_invalidates_with_missing_argument() {
+        let err = parse_args_from(["--images-dir", "--no-fetch"]).unwrap_err();
+        assert!(err.contains("--images-dir requires a path"));
+    }
+
+    #[test]
+    fn zero_arguments_properly_defaults() {
+        let args: Vec<String> = vec![];
+        let CliAction::Run(opts) = parse_args_from(args).unwrap() else {
+            panic!("expected CliAction::Run");
+        };
+
+        assert_eq!(opts.input_path, PathBuf::from("README.mdr"));
+        assert_eq!(opts.output_path, PathBuf::from("README.md"));
+        assert_eq!(opts.images_dir, PathBuf::from("./images/mdr"));
+        assert_eq!(opts.images_url_prefix, "images/mdr");
+    }
+
+    #[test]
+    fn too_many_positional_arguments() {
+        let err = parse_args_from(["input.mdr", "output.md", "extra"]).unwrap_err();
+        assert!(err.contains("2"));
+    }
+
+    #[test]
+    fn help_flag_triggers_help_action() {
+        let action = parse_args_from(["--help"]).unwrap();
+        assert_eq!(action, CliAction::Help);
+    }
+
+    #[test]
+    fn version_flag_triggers_version_action() {
+        let action = parse_args_from(["--version"]).unwrap();
+        assert_eq!(action, CliAction::Version);
     }
 
     #[test]
