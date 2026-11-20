@@ -88,7 +88,7 @@ mdr README.mdr README.md
 * [x] `@theme` dark/light palette tokens and `@def` parameterized macros
 * [x] Automatic `<picture>` expansion and `{live}` local fallback snapshots
 * [x] Isolated `images/mdr/` asset caching, pruning, and offline fallback warnings
-* [ ] CLI output path inference (`mdr <file>.mdr`) and composite GitHub Action (`action.yml`)
+* [x] CLI output path inference (`mdr <file>.mdr`) and composite GitHub Action (`action.yml`)
 * [ ] Unified `Value` model with `@var` constants and `@list` tuple declarations
 * [ ] Nested `@repeat` loops and resilient `@expand` windowing blocks
 * [ ] `@include` composition for `.mdr` partials and local/remote `.json` feeds
