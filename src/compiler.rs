@@ -19,6 +19,42 @@ struct ImageAttrs {
     html_attrs: String,
 }
 
+/// Compiles the source document by collecting top-level declarations, expanding macros,
+/// interpolating symbols, and processing image references.
+///
+/// The compiler performs multiple passes over `source`:
+///
+/// 1. Collects declarations outside fenced code blocks:
+///    - `@theme name = dark | light`
+///    - `@var name = value`
+///    - `@text name = value`
+///    - `@tuple name = (...)`
+///    - `@def name(param, ...) = body`
+///
+///    Declaration lines are removed from the rendered output. If a declaration is followed
+///    by a blank line, that blank line is also omitted.
+///
+/// 2. Processes the remaining body lines outside fenced code blocks by:
+///    - expanding macros,
+///    - interpolating collected symbols,
+///    - localizing or transforming image references via `process_images`.
+///
+/// 3. Preserves fenced code blocks unchanged. Lines inside fences beginning with
+///    triple backticks or tildes are not interpreted as declarations or processed for
+///    macro expansion, interpolation, or image handling.
+///
+/// The final output preserves the trailing newline if the input `source` ended with one.
+///
+/// # Parameters
+///
+/// - `source`: The source document to compile.
+/// - `opts`: Compilation options used when processing images and other output behavior.
+/// - `referenced_images`: A mutable set that is updated with image paths referenced during
+///   compilation.
+///
+/// # Returns
+///
+/// The compiled document as a `String`.
 pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<String>) -> String {
     let mut ctx = Context::default();
     let mut body_lines = Vec::new();
@@ -602,5 +638,84 @@ mod tests {
         ));
         assert!(out.contains("<img width=\"120\" alt=\"StaticLogo\" src=\"images/mdr/staticlogo-"));
         assert_eq!(refs.len(), 2);
+    }
+
+    #[test]
+    fn interpolates_var_text_and_theme_dot_paths() {
+        let src = "\
+@theme accent = 14B8A6 | 0F766E
+@text profile = https://github.com/Powerisinschool
+@var badge_tpl = https://img.shields.io/badge/Rust-161B22?logoColor={accent}
+
+[Profile]({profile})
+Light hex: {accent.light}
+![Rust]({badge_tpl})
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("[Profile](https://github.com/Powerisinschool)"));
+        assert!(out.contains("Light hex: 0F766E"));
+        assert!(out.contains("<picture>"));
+        assert_eq!(refs.len(), 2);
+    }
+
+    #[test]
+    fn parses_tuples_with_symbol_refs_quotes_and_parentheses() {
+        let src = "\
+@theme accent = 14B8A6 | 0F766E
+@var label = \"AI, Data & Infrastructure\"
+@var non_tuple = (optional) and (notes)
+@tuple entry = (label, accent, (nested, item))
+
+Category: {entry.0}
+Light color: {entry.1.light}
+Nested: {entry.2.1}
+Note: {non_tuple}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("Category: AI, Data & Infrastructure"));
+        assert!(out.contains("Light color: 0F766E"));
+        assert!(out.contains("Nested: item"));
+        assert!(out.contains("Note: (optional) and (notes)"));
+    }
+
+    #[test]
+    fn expands_macros_with_quoted_comma_arguments() {
+        let src = "\
+@def tag(label, color) = [{label}](#{color})
+@tag(\"Systems, Low-Level\", teal)
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("[\"Systems, Low-Level\"](#teal)"));
+    }
+
+    #[test]
+    fn preserves_directives_and_tokens_inside_fenced_code_blocks() {
+        let src = "\
+@var greeting = Hello
+
+```mdr
+@var greeting = Ignored
+{greeting}
+```
+
+~~~
+@theme skipped = 000000 | FFFFFF
+{greeting}
+~~~
+
+Outside: {greeting}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("```mdr\n@var greeting = Ignored\n{greeting}\n```"));
+        assert!(out.contains("~~~\n@theme skipped = 000000 | FFFFFF\n{greeting}\n~~~"));
+        assert!(out.contains("Outside: Hello"));
     }
 }
