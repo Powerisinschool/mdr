@@ -72,7 +72,9 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
         }
 
         if !in_fence {
-            if let Some(rest) = trimmed.strip_prefix("@theme ") {
+            if trimmed.starts_with("@#") {
+                continue; // Comment line, skip
+            } else if let Some(rest) = trimmed.strip_prefix("@theme ") {
                 if let Some((name, vals)) = rest.split_once('=') {
                     if let Some((dark, light)) = vals.split_once('|') {
                         ctx.symbols.insert(
@@ -96,8 +98,9 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
                 }
             } else if let Some(rest) = trimmed.strip_prefix("@text ") {
                 if let Some((name, val)) = rest.split_once('=') {
+                    let resolved = interpolate_symbols(val.trim(), &ctx.symbols);
                     ctx.symbols
-                        .insert(name.trim().to_string(), Value::Text(val.trim().to_string()));
+                        .insert(name.trim().to_string(), Value::Text(resolved));
                     skip_next_blank = true;
                     continue;
                 }
@@ -486,14 +489,14 @@ fn parse_value(raw: &str, symbols: &BTreeMap<String, Value>) -> Option<Value> {
     if trimmed.is_empty() {
         None
     } else if let Some(inner) = trimmed.strip_prefix('"').and_then(|s| s.strip_suffix('"')) {
-        Some(Value::Text(inner.to_string()))
+        Some(Value::Text(interpolate_symbols(inner, symbols)))
     } else if trimmed.starts_with('(') && find_matching_paren(trimmed, 0) == Some(trimmed.len() - 1)
     {
         parse_tuple(trimmed, symbols)
     } else if let Some(val) = symbols.get(trimmed) {
         Some(val.clone())
     } else {
-        Some(Value::Text(trimmed.to_string())) // Unresolved text is treated as a literal string
+        Some(Value::Text(interpolate_symbols(trimmed, symbols))) // Unresolved text is treated as a literal string
     }
 }
 
@@ -717,5 +720,39 @@ Outside: {greeting}
         assert!(out.contains("```mdr\n@var greeting = Ignored\n{greeting}\n```"));
         assert!(out.contains("~~~\n@theme skipped = 000000 | FFFFFF\n{greeting}\n~~~"));
         assert!(out.contains("Outside: Hello"));
+    }
+
+    #[test]
+    fn composes_chained_text_and_var_declarations() {
+        let src = "\
+@text base_url = https://github.com
+@text repo_path = Powerisinschool/mdr
+@var repo_url = {base_url}/{repo_path}
+@tuple repo_link = (\"Source\", \"{repo_url}/releases\")
+
+Repo: {repo_url}
+Releases: {repo_link.1}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("Repo: https://github.com/Powerisinschool/mdr"));
+        assert!(out.contains("Releases: https://github.com/Powerisinschool/mdr/releases"));
+    }
+
+    #[test]
+    fn skips_comment_lines() {
+        let src = "\
+@# This is a comment line
+@# This is another comment line
+
+This is not a comment
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(!out.contains("This is a comment line"));
+        assert!(!out.contains("This is another comment line"));
+        assert!(out.contains("This is not a comment"));
     }
 }
