@@ -81,7 +81,7 @@ cargo install --path .
 
 @def badge(alt, label, logo) = ![{alt}](https://img.shields.io/badge/{label}-{card}?style=for-the-badge&logo={logo}&logoColor={accent})
 
-# Static themed badge (cached in images/{BIN_NAME}/)
+# Static themed badge (cached in images/mdr/)
 @badge(Rust, Rust, rust)
 @var username = <username>
 
