@@ -39,11 +39,11 @@
 
 ### Why `mdr`?
 
-GitHub Markdown supports dark and light theme switching through `<picture>` and `<source media="(prefers-color-scheme: ...)">` tags, but writing them by hand turns clean READMEs into repetitive HTML boilerplate[cite: 1].
+GitHub Markdown supports dark and light theme switching through `<picture>` and `<source media="(prefers-color-scheme: ...)">` tags, but writing them by hand turns clean READMEs into repetitive HTML boilerplate.
 
-- **Theme Tokens (`@theme`):** Declare paired dark and light values once and reference them anywhere with `{token}`[cite: 1].
-- **Macros (`@def`):** Collapse repeated badge and component markup into single-line calls[cite: 1].
-- **Automatic `<picture>` Expansion:** Any image URL containing a `@theme` token or `{live}` flag compiles into a responsive `<picture>` element automatically[cite: 1].
+- **Theme Tokens (`@theme`):** Declare paired dark and light values once and reference them anywhere with `{token}`.
+- **Macros (`@def`):** Collapse repeated badge and component markup into single-line calls.
+- **Automatic `<picture>` Expansion:** Any image URL containing a `@theme` token or `{live}` flag compiles into a responsive `<picture>` element automatically.
 - **Local Asset Caching (`images/mdr/`):** External images are downloaded, content-hashed, and served locally from `images/mdr/`, with automatic pruning of unused assets and graceful fallback to direct URLs on network failure.
 - **Live Widget Snapshots (`{live}`):** Dynamic stats cards keep their remote URLs in `<source>` while storing a local fallback snapshot in `<img>`.
 - **Zero Dependencies:** Built strictly on the Rust standard library (`std`) for sub-second CI compilation.
