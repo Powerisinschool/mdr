@@ -63,3 +63,59 @@ impl Value {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn resolves_nested_paths_and_tuple_indices() {
+        let mut author = BTreeMap::new();
+        author.insert("name".to_string(), Value::Text("Tolu".to_string()));
+
+        let mut root = BTreeMap::new();
+        root.insert("author".to_string(), Value::Object(author));
+        root.insert(
+            "pair".to_string(),
+            Value::Tuple(vec![
+                Value::Text("Rust".to_string()),
+                Value::Text("Systems".to_string()),
+            ]),
+        );
+
+        let val = Value::Object(root);
+
+        assert_eq!(
+            val.resolve_path("author.name"),
+            Some(&Value::Text("Tolu".to_string()))
+        );
+        assert_eq!(
+            val.resolve_path("pair.1"),
+            Some(&Value::Text("Systems".to_string()))
+        );
+
+        assert_eq!(val.resolve_path("pair.5"), None);
+        assert_eq!(val.resolve_path("author.name.extra"), None);
+
+        assert!(true);
+    }
+
+    #[test]
+    fn resolves_text_and_theme_variants() {
+        let theme = Value::Theme(ThemeValue {
+            dark: "14B8A6".to_string(),
+            light: "0F766E".to_string(),
+        });
+        let tuple = Value::Tuple(vec![Value::Text("Badge".to_string()), theme.clone()]);
+
+        assert_eq!(theme.resolve_text(""), Some("14B8A6"));
+        assert_eq!(theme.resolve_text("dark"), Some("14B8A6"));
+        assert_eq!(theme.resolve_text("light"), Some("0F766E"));
+        assert_eq!(theme.resolve_text("invalid"), None);
+
+        assert_eq!(tuple.resolve_text(""), None);
+        assert_eq!(tuple.resolve_text("0"), Some("Badge"));
+        assert_eq!(tuple.resolve_text("1"), Some("14B8A6"));
+        assert_eq!(tuple.resolve_text("1.light"), Some("0F766E"));
+    }
+}

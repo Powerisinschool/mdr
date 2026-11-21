@@ -494,9 +494,7 @@ fn split_top_level(s: &str, delimiter: char) -> Vec<&str> {
             '"' => in_string = !in_string,
             '(' | '[' | '{' if !in_string => depth += 1,
             ')' | ']' | '}' if !in_string => {
-                if depth > 0 {
-                    depth -= 1;
-                }
+                depth = depth.saturating_sub(1);
             }
             _ if !in_string && ch == delimiter && depth == 0 => {
                 parts.push(s[last_split..idx].trim());
