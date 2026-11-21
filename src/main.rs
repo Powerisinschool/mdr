@@ -1,5 +1,6 @@
 mod assets;
 mod compiler;
+mod value;
 
 use std::borrow::Cow;
 use std::collections::HashSet;
