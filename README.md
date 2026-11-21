@@ -17,6 +17,13 @@
       <img alt="CI Status" src="images/mdr/ci-status-dark-b6bf56a9.svg" />
     </picture>
   </a>
+  <a href="https://github.com/Powerisinschool/mdr/releases">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="images/mdr/releases-dark-255dc9d9.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="images/mdr/releases-light-1ce22ec5.svg" />
+      <img alt="Releases" src="images/mdr/releases-dark-255dc9d9.svg" />
+    </picture>
+  </a>
   <a href="https://github.com/Powerisinschool/mdr">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="images/mdr/repository-dark-693bd5f9.svg" />
@@ -51,7 +58,7 @@ cargo run --release -- README.mdr README.md
 
 # Or install locally via Cargo
 cargo install --path .
-mdr README.mdr README.md
+{BIN_NAME} README.mdr README.md
 
 ```
 
@@ -74,11 +81,12 @@ mdr README.mdr README.md
 
 @def badge(alt, label, logo) = ![{alt}](https://img.shields.io/badge/{label}-{card}?style=for-the-badge&logo={logo}&logoColor={accent})
 
-# Static themed badge (cached in images/mdr/)
+# Static themed badge (cached in images/{BIN_NAME}/)
 @badge(Rust, Rust, rust)
+@var username = <username>
 
 # Live remote image with local fallback snapshot
-[![Stats](https://github-readme-stats.vercel.app/api?username=Powerisinschool&title_color={accent}){height=175 live}](https://github.com/Powerisinschool)
+[![Stats](https://github-readme-stats.vercel.app/api?username={username}&title_color={accent}){height=175 live}](https://github.com/{username})
 ```
 
 ---
@@ -89,7 +97,7 @@ mdr README.mdr README.md
 * [x] Automatic `<picture>` expansion and `{live}` local fallback snapshots
 * [x] Isolated `images/mdr/` asset caching, pruning, and offline fallback warnings
 * [x] CLI output path inference (`mdr <file>.mdr`) and composite GitHub Action (`action.yml`)
-* [ ] Unified `Value` model with `@var` constants and `@list` tuple declarations
+* [x] Unified `Value` model with `@var` constants and `@list` tuple declarations
 * [ ] Nested `@repeat` loops and resilient `@expand` windowing blocks
 * [ ] `@include` composition for `.mdr` partials and local/remote `.json` feeds
 * [ ] Multi-platform GitHub Releases and Homebrew tap (`brew install Powerisinschool/tap/mdr`)
