@@ -11,8 +11,10 @@ pub enum Value {
     Theme(ThemeValue),
     Text(String),
     Tuple(Vec<Value>),
-    List(Vec<Value>),
-    Object(BTreeMap<String, Value>),
+    #[allow(dead_code)]
+    List(Vec<Value>), // TODO: Implement List variant for future use cases
+    #[allow(dead_code)]
+    Object(BTreeMap<String, Value>), // TODO: Implement Object variant for future use cases
 }
 
 impl Value {
