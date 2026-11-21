@@ -98,8 +98,6 @@ mod tests {
 
         assert_eq!(val.resolve_path("pair.5"), None);
         assert_eq!(val.resolve_path("author.name.extra"), None);
-
-        assert!(true);
     }
 
     #[test]

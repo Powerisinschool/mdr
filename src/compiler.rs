@@ -73,6 +73,7 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
 
         if !in_fence {
             if trimmed.starts_with("@#") {
+                skip_next_blank = true;
                 continue; // Comment line, skip
             } else if let Some(rest) = trimmed.strip_prefix("@theme ") {
                 if let Some((name, vals)) = rest.split_once('=') {
