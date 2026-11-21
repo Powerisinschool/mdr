@@ -17,6 +17,13 @@
       <img alt="CI Status" src="images/mdr/ci-status-dark-b6bf56a9.svg" />
     </picture>
   </a>
+  <a href="https://github.com/Powerisinschool/mdr/releases">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="images/mdr/releases-dark-255dc9d9.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="images/mdr/releases-light-1ce22ec5.svg" />
+      <img alt="Releases" src="images/mdr/releases-dark-255dc9d9.svg" />
+    </picture>
+  </a>
   <a href="https://github.com/Powerisinschool/mdr">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="images/mdr/repository-dark-693bd5f9.svg" />
@@ -32,11 +39,11 @@
 
 ### Why `mdr`?
 
-GitHub Markdown supports dark and light theme switching through `<picture>` and `<source media="(prefers-color-scheme: ...)">` tags, but writing them by hand turns clean READMEs into repetitive HTML boilerplate[cite: 1].
+GitHub Markdown supports dark and light theme switching through `<picture>` and `<source media="(prefers-color-scheme: ...)">` tags, but writing them by hand turns clean READMEs into repetitive HTML boilerplate.
 
-- **Theme Tokens (`@theme`):** Declare paired dark and light values once and reference them anywhere with `{token}`[cite: 1].
-- **Macros (`@def`):** Collapse repeated badge and component markup into single-line calls[cite: 1].
-- **Automatic `<picture>` Expansion:** Any image URL containing a `@theme` token or `{live}` flag compiles into a responsive `<picture>` element automatically[cite: 1].
+- **Theme Tokens (`@theme`):** Declare paired dark and light values once and reference them anywhere with `{token}`.
+- **Macros (`@def`):** Collapse repeated badge and component markup into single-line calls.
+- **Automatic `<picture>` Expansion:** Any image URL containing a `@theme` token or `{live}` flag compiles into a responsive `<picture>` element automatically.
 - **Local Asset Caching (`images/mdr/`):** External images are downloaded, content-hashed, and served locally from `images/mdr/`, with automatic pruning of unused assets and graceful fallback to direct URLs on network failure.
 - **Live Widget Snapshots (`{live}`):** Dynamic stats cards keep their remote URLs in `<source>` while storing a local fallback snapshot in `<img>`.
 - **Zero Dependencies:** Built strictly on the Rust standard library (`std`) for sub-second CI compilation.
@@ -51,7 +58,7 @@ cargo run --release -- README.mdr README.md
 
 # Or install locally via Cargo
 cargo install --path .
-mdr README.mdr README.md
+{BIN_NAME} README.mdr README.md
 
 ```
 
@@ -76,9 +83,10 @@ mdr README.mdr README.md
 
 # Static themed badge (cached in images/mdr/)
 @badge(Rust, Rust, rust)
+@var username = <username>
 
 # Live remote image with local fallback snapshot
-[![Stats](https://github-readme-stats.vercel.app/api?username=Powerisinschool&title_color={accent}){height=175 live}](https://github.com/Powerisinschool)
+[![Stats](https://github-readme-stats.vercel.app/api?username={username}&title_color={accent}){height=175 live}](https://github.com/{username})
 ```
 
 ---
@@ -89,7 +97,7 @@ mdr README.mdr README.md
 * [x] Automatic `<picture>` expansion and `{live}` local fallback snapshots
 * [x] Isolated `images/mdr/` asset caching, pruning, and offline fallback warnings
 * [x] CLI output path inference (`mdr <file>.mdr`) and composite GitHub Action (`action.yml`)
-* [ ] Unified `Value` model with `@var` constants and `@list` tuple declarations
+* [x] Unified `Value` model with `@var` constants and `@list` tuple declarations
 * [ ] Nested `@repeat` loops and resilient `@expand` windowing blocks
 * [ ] `@include` composition for `.mdr` partials and local/remote `.json` feeds
 * [ ] Multi-platform GitHub Releases and Homebrew tap (`brew install Powerisinschool/tap/mdr`)

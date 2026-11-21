@@ -1,6 +1,7 @@
 use crate::assets;
+use crate::value::{ThemeValue, Value};
 use crate::Options;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 struct MacroDef {
     params: Vec<String>,
@@ -9,7 +10,7 @@ struct MacroDef {
 
 #[derive(Default)]
 struct Context {
-    themes: HashMap<String, (String, String)>,
+    symbols: BTreeMap<String, Value>,
     macros: HashMap<String, MacroDef>,
 }
 
@@ -18,6 +19,42 @@ struct ImageAttrs {
     html_attrs: String,
 }
 
+/// Compiles the source document by collecting top-level declarations, expanding macros,
+/// interpolating symbols, and processing image references.
+///
+/// The compiler performs multiple passes over `source`:
+///
+/// 1. Collects declarations outside fenced code blocks:
+///    - `@theme name = dark | light`
+///    - `@var name = value`
+///    - `@text name = value`
+///    - `@tuple name = (...)`
+///    - `@def name(param, ...) = body`
+///
+///    Declaration lines are removed from the rendered output. If a declaration is followed
+///    by a blank line, that blank line is also omitted.
+///
+/// 2. Processes the remaining body lines outside fenced code blocks by:
+///    - expanding macros,
+///    - interpolating collected symbols,
+///    - localizing or transforming image references via `process_images`.
+///
+/// 3. Preserves fenced code blocks unchanged. Lines inside fences beginning with
+///    triple backticks or tildes are not interpreted as declarations or processed for
+///    macro expansion, interpolation, or image handling.
+///
+/// The final output preserves the trailing newline if the input `source` ended with one.
+///
+/// # Parameters
+///
+/// - `source`: The source document to compile.
+/// - `opts`: Compilation options used when processing images and other output behavior.
+/// - `referenced_images`: A mutable set that is updated with image paths referenced during
+///   compilation.
+///
+/// # Returns
+///
+/// The compiled document as a `String`.
 pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<String>) -> String {
     let mut ctx = Context::default();
     let mut body_lines = Vec::new();
@@ -35,16 +72,46 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
         }
 
         if !in_fence {
-            if let Some(rest) = trimmed.strip_prefix("@theme ") {
+            if trimmed.starts_with("@#") {
+                skip_next_blank = true;
+                continue; // Comment line, skip
+            } else if let Some(rest) = trimmed.strip_prefix("@theme ") {
                 if let Some((name, vals)) = rest.split_once('=') {
                     if let Some((dark, light)) = vals.split_once('|') {
-                        ctx.themes.insert(
+                        ctx.symbols.insert(
                             name.trim().to_string(),
-                            (dark.trim().to_string(), light.trim().to_string()),
+                            Value::Theme(ThemeValue {
+                                dark: dark.trim().to_string(),
+                                light: light.trim().to_string(),
+                            }),
                         );
                         skip_next_blank = true;
                         continue;
                     }
+                }
+            } else if let Some(rest) = trimmed.strip_prefix("@var ") {
+                if let Some((name, raw_val)) = rest.split_once('=') {
+                    if let Some(val) = parse_value(raw_val.trim(), &ctx.symbols) {
+                        ctx.symbols.insert(name.trim().to_string(), val);
+                    }
+                    skip_next_blank = true;
+                    continue;
+                }
+            } else if let Some(rest) = trimmed.strip_prefix("@text ") {
+                if let Some((name, val)) = rest.split_once('=') {
+                    let resolved = interpolate_symbols(val.trim(), &ctx.symbols);
+                    ctx.symbols
+                        .insert(name.trim().to_string(), Value::Text(resolved));
+                    skip_next_blank = true;
+                    continue;
+                }
+            } else if let Some(rest) = trimmed.strip_prefix("@tuple ") {
+                if let Some((name, raw_tuple)) = rest.split_once('=') {
+                    if let Some(tuple_val) = parse_tuple(raw_tuple.trim(), &ctx.symbols) {
+                        ctx.symbols.insert(name.trim().to_string(), tuple_val);
+                    } // If parsing fails, skip adding the symbol
+                    skip_next_blank = true;
+                    continue;
                 }
             } else if let Some(rest) = trimmed.strip_prefix("@def ") {
                 if let Some((sig, body)) = rest.split_once('=') {
@@ -92,7 +159,8 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
             out.push(line.to_string());
         } else {
             let expanded = expand_macros(line, &ctx.macros);
-            out.push(process_images(&expanded, &ctx, opts, referenced_images));
+            let interpolated = interpolate_symbols(&expanded, &ctx.symbols);
+            out.push(process_images(&interpolated, &ctx, opts, referenced_images));
         }
     }
 
@@ -126,7 +194,7 @@ fn expand_macros(line: &str, macros: &HashMap<String, MacroDef>) -> String {
                     if let Some(def) = macros.get(name) {
                         if let Some(close_idx) = find_matching_paren(&current, end_ident) {
                             let raw_args = &current[end_ident + 1..close_idx];
-                            let args: Vec<&str> = raw_args.split(',').map(str::trim).collect();
+                            let args = split_top_level(raw_args, ',');
 
                             let mut expansion = def.body.clone();
                             for (param, arg) in def.params.iter().zip(args.iter()) {
@@ -201,6 +269,43 @@ fn process_images(
     line.to_string()
 }
 
+fn interpolate_symbols(line: &str, symbols: &BTreeMap<String, Value>) -> String {
+    let mut out = String::with_capacity(line.len());
+    let mut rest = line;
+
+    while let Some(open) = rest.find('{') {
+        out.push_str(&rest[..open]);
+        let after_open = &rest[open + 1..];
+
+        if let Some(close) = after_open.find('}') {
+            let expr = after_open[..close].trim();
+            let (root, path) = expr.split_once('.').unwrap_or((expr, ""));
+
+            if let Some(val) = symbols.get(root) {
+                let keep_for_picture = matches!(val, Value::Theme(_)) && path.is_empty();
+                if !keep_for_picture {
+                    if let Some(resolved) = val.resolve_text(path) {
+                        out.push_str(resolved);
+                        rest = &after_open[close + 1..];
+                        continue;
+                    }
+                }
+            }
+
+            out.push('{');
+            out.push_str(&after_open[..=close]);
+            rest = &after_open[close + 1..];
+        } else {
+            out.push('{');
+            rest = after_open;
+            break;
+        }
+    }
+
+    out.push_str(rest);
+    out
+}
+
 fn render_image(
     md_img: &str,
     href: Option<&str>,
@@ -220,18 +325,22 @@ fn render_image(
     let trailing = after_alt[url_end + 1..].trim();
     let attrs = parse_attrs(trailing);
 
-    let uses_theme = ctx
-        .themes
-        .keys()
-        .any(|k| raw_url.contains(&format!("{{{k}}}")));
+    let used_themes = ctx
+        .symbols
+        .iter()
+        .filter_map(|(k, v)| match v {
+            Value::Theme(theme) if raw_url.contains(&format!("{{{k}}}")) => Some((k, theme)),
+            _ => None,
+        })
+        .collect::<Vec<_>>();
 
-    if uses_theme {
+    if !used_themes.is_empty() {
         let mut dark_url = raw_url.to_string();
         let mut light_url = raw_url.to_string();
-        for (key, (dark, light)) in &ctx.themes {
+        for (key, theme) in used_themes {
             let token = format!("{{{key}}}");
-            dark_url = dark_url.replace(&token, dark);
-            light_url = light_url.replace(&token, light);
+            dark_url = dark_url.replace(&token, theme.dark.as_str());
+            light_url = light_url.replace(&token, theme.light.as_str());
         }
 
         // Download both variants (even for live images so local fallback snapshots stay saved)
@@ -375,6 +484,73 @@ fn parse_attrs(trailing: &str) -> ImageAttrs {
     }
 }
 
+fn parse_value(raw: &str, symbols: &BTreeMap<String, Value>) -> Option<Value> {
+    let trimmed = raw.trim();
+
+    if trimmed.is_empty() {
+        None
+    } else if let Some(inner) = trimmed.strip_prefix('"').and_then(|s| s.strip_suffix('"')) {
+        Some(Value::Text(interpolate_symbols(inner, symbols)))
+    } else if trimmed.starts_with('(') && find_matching_paren(trimmed, 0) == Some(trimmed.len() - 1)
+    {
+        parse_tuple(trimmed, symbols)
+    } else if let Some(val) = symbols.get(trimmed) {
+        Some(val.clone())
+    } else {
+        Some(Value::Text(interpolate_symbols(trimmed, symbols))) // Unresolved text is treated as a literal string
+    }
+}
+
+fn parse_tuple(raw: &str, symbols: &BTreeMap<String, Value>) -> Option<Value> {
+    let mut items = Vec::new();
+
+    if let Some(inner) = raw.strip_prefix('(').and_then(|s| s.strip_suffix(')')) {
+        for item in split_top_level(inner, ',') {
+            if let Some(val) = parse_value(item, symbols) {
+                items.push(val);
+            }
+        }
+
+        Some(Value::Tuple(items))
+    } else {
+        None
+    }
+}
+
+fn split_top_level(s: &str, delimiter: char) -> Vec<&str> {
+    let mut parts = Vec::new();
+    let mut depth = 0usize;
+    let mut in_string = false;
+    let mut escape = false;
+    let mut last_split = 0usize;
+
+    for (idx, ch) in s.char_indices() {
+        if escape {
+            escape = false;
+            continue;
+        }
+        match ch {
+            '\\' if in_string => escape = true,
+            '"' => in_string = !in_string,
+            '(' | '[' | '{' if !in_string => depth += 1,
+            ')' | ']' | '}' if !in_string => {
+                depth = depth.saturating_sub(1);
+            }
+            _ if !in_string && ch == delimiter && depth == 0 => {
+                parts.push(s[last_split..idx].trim());
+                last_split = idx + 1;
+            }
+            _ => {}
+        }
+    }
+
+    if last_split < s.len() {
+        parts.push(s[last_split..].trim());
+    }
+
+    parts
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -466,5 +642,118 @@ mod tests {
         ));
         assert!(out.contains("<img width=\"120\" alt=\"StaticLogo\" src=\"images/mdr/staticlogo-"));
         assert_eq!(refs.len(), 2);
+    }
+
+    #[test]
+    fn interpolates_var_text_and_theme_dot_paths() {
+        let src = "\
+@theme accent = 14B8A6 | 0F766E
+@text profile = https://github.com/Powerisinschool
+@var badge_tpl = https://img.shields.io/badge/Rust-161B22?logoColor={accent}
+
+[Profile]({profile})
+Light hex: {accent.light}
+![Rust]({badge_tpl})
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("[Profile](https://github.com/Powerisinschool)"));
+        assert!(out.contains("Light hex: 0F766E"));
+        assert!(out.contains("<picture>"));
+        assert_eq!(refs.len(), 2);
+    }
+
+    #[test]
+    fn parses_tuples_with_symbol_refs_quotes_and_parentheses() {
+        let src = "\
+@theme accent = 14B8A6 | 0F766E
+@var label = \"AI, Data & Infrastructure\"
+@var non_tuple = (optional) and (notes)
+@tuple entry = (label, accent, (nested, item))
+
+Category: {entry.0}
+Light color: {entry.1.light}
+Nested: {entry.2.1}
+Note: {non_tuple}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("Category: AI, Data & Infrastructure"));
+        assert!(out.contains("Light color: 0F766E"));
+        assert!(out.contains("Nested: item"));
+        assert!(out.contains("Note: (optional) and (notes)"));
+    }
+
+    #[test]
+    fn expands_macros_with_quoted_comma_arguments() {
+        let src = "\
+@def tag(label, color) = [{label}](#{color})
+@tag(\"Systems, Low-Level\", teal)
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("[\"Systems, Low-Level\"](#teal)"));
+    }
+
+    #[test]
+    fn preserves_directives_and_tokens_inside_fenced_code_blocks() {
+        let src = "\
+@var greeting = Hello
+
+```mdr
+@var greeting = Ignored
+{greeting}
+```
+
+~~~
+@theme skipped = 000000 | FFFFFF
+{greeting}
+~~~
+
+Outside: {greeting}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("```mdr\n@var greeting = Ignored\n{greeting}\n```"));
+        assert!(out.contains("~~~\n@theme skipped = 000000 | FFFFFF\n{greeting}\n~~~"));
+        assert!(out.contains("Outside: Hello"));
+    }
+
+    #[test]
+    fn composes_chained_text_and_var_declarations() {
+        let src = "\
+@text base_url = https://github.com
+@text repo_path = Powerisinschool/mdr
+@var repo_url = {base_url}/{repo_path}
+@tuple repo_link = (\"Source\", \"{repo_url}/releases\")
+
+Repo: {repo_url}
+Releases: {repo_link.1}
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(out.contains("Repo: https://github.com/Powerisinschool/mdr"));
+        assert!(out.contains("Releases: https://github.com/Powerisinschool/mdr/releases"));
+    }
+
+    #[test]
+    fn skips_comment_lines() {
+        let src = "\
+@# This is a comment line
+@# This is another comment line
+
+This is not a comment
+";
+        let mut refs = HashSet::new();
+        let out = compile(src, &offline_opts(), &mut refs);
+
+        assert!(!out.contains("This is a comment line"));
+        assert!(!out.contains("This is another comment line"));
+        assert!(out.contains("This is not a comment"));
     }
 }

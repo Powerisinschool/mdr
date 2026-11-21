@@ -14,7 +14,7 @@ runs:
         OUTPUT="${{ inputs.output }}"
         IMAGES_DIR="${{ inputs.images-dir }}"
         IMAGES_PREFIX="${{ inputs.images-prefix }}"
-        
+
         ARGS=("$INPUT")
         if [[ -n "$OUTPUT" ]]; then
           ARGS+=("$OUTPUT")
@@ -33,19 +33,19 @@ runs:
           TARGET_OUT="${OUTPUT:-${INPUT%.mdr}.md}"
           TMP_OUT="$(mktemp "${TARGET_OUT}.XXXXXX")"
           trap 'rm -f "$TMP_OUT"' EXIT
-        
+
           CHECK_ARGS=("$INPUT" "$TMP_OUT" "--no-fetch")
-        
+
           if [[ -n "$IMAGES_DIR" ]]; then
             CHECK_ARGS+=("--images-dir" "$IMAGES_DIR")
           fi
           if [[ -n "$IMAGES_PREFIX" ]]; then
             CHECK_ARGS+=("--images-prefix" "$IMAGES_PREFIX")
           fi
-        
+
           "$BIN" "${CHECK_ARGS[@]}"
           diff -u "$TARGET_OUT" "$TMP_OUT"
-        
+
           OUT_DIR="$(dirname "$TARGET_OUT")"
           DEFAULT_PREFIX="${IMAGES_DIR:-images/mdr}"
           PREFIX="${IMAGES_PREFIX:-$DEFAULT_PREFIX}"
