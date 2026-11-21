@@ -50,6 +50,14 @@ pub fn compile(source: &str, opts: &Options, referenced_images: &mut HashSet<Str
                         continue;
                     }
                 }
+            } else if let Some(rest) = trimmed.strip_prefix("@var ") {
+                if let Some((name, raw_val)) = rest.split_once('=') {
+                    if let Some(val) = parse_value(raw_val.trim(), &ctx.symbols) {
+                        ctx.symbols.insert(name.trim().to_string(), val);
+                    }
+                    skip_next_blank = true;
+                    continue;
+                }
             } else if let Some(rest) = trimmed.strip_prefix("@text ") {
                 if let Some((name, val)) = rest.split_once('=') {
                     ctx.symbols
@@ -443,7 +451,8 @@ fn parse_value(raw: &str, symbols: &BTreeMap<String, Value>) -> Option<Value> {
         None
     } else if let Some(inner) = trimmed.strip_prefix('"').and_then(|s| s.strip_suffix('"')) {
         Some(Value::Text(inner.to_string()))
-    } else if trimmed.starts_with('(') && trimmed.ends_with(')') {
+    } else if trimmed.starts_with('(') && find_matching_paren(trimmed, 0) == Some(trimmed.len() - 1)
+    {
         parse_tuple(trimmed, symbols)
     } else if let Some(val) = symbols.get(trimmed) {
         Some(val.clone())
